@@ -48,7 +48,22 @@ ALTER DATABASE atelier SET TIMEZONE TO 'Asia/Yekaterinburg';
 SELECT * FROM order_info_view;
 ```
 
+Получить список всех невыполненных и неотмененных заказов:
+```postgresql
+SELECT * FROM order_info_view WHERE "Status" != 'done' AND "Status" != 'cancelled';
+```
+
 Получить заказ по его ID:
 ```postgresql
-SELECT * FROM order_info_view WHERE order_id = 1;
+SELECT * FROM order_info_view WHERE "Order ID" = 1;
+```
+
+Список всех невыполненных и неотмененных услуг по всем заказам:
+```postgresql
+SELECT * FROM order_list_view WHERE "Status" != 'done' AND "Status" != 'cancelled';
+```
+
+Состав заказа по его ID:
+```postgresql
+SELECT * FROM order_list_view WHERE "Order ID" = 1;
 ```
