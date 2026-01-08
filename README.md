@@ -40,3 +40,15 @@ ALTER DATABASE atelier SET TIMEZONE TO 'Asia/Yekaterinburg';
 ```postgresql
 \i init_all.sql
 ```
+
+## Использование
+
+Получить список всех заказов:
+```postgresql
+SELECT * FROM order_info_view;
+```
+
+Получить заказ по его ID:
+```postgresql
+SELECT * FROM order_info_view WHERE order_id = 1;
+```
