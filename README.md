@@ -43,17 +43,24 @@ ALTER DATABASE atelier SET TIMEZONE TO 'Asia/Yekaterinburg';
 
 ## Использование
 
-Получить список всех заказов:
+### Услуги и заказы
+
+Список доступных услуг:
+```postgresql
+SELECT * from service;
+```
+
+Список всех заказов:
 ```postgresql
 SELECT * FROM order_info_view;
 ```
 
-Получить список всех невыполненных и неотмененных заказов:
+Список всех невыполненных и неотмененных заказов:
 ```postgresql
 SELECT * FROM order_info_view WHERE "Status" != 'done' AND "Status" != 'cancelled';
 ```
 
-Получить заказ по его ID:
+Получение заказа по его ID:
 ```postgresql
 SELECT * FROM order_info_view WHERE "Order ID" = 1;
 ```
@@ -68,14 +75,11 @@ SELECT * FROM order_list_view WHERE "Status" != 'done' AND "Status" != 'cancelle
 SELECT * FROM order_list_view WHERE "Order ID" = 1;
 ```
 
+### Сотрудники и назначение услуг
+
 Список активных сотрудников:
 ```postgresql
 SELECT * from employee WHERE is_active = true;
-```
-
-Список услуг:
-```postgresql
-SELECT * from service;
 ```
 
 Назначение сотруднику ТОЛЬКО ОДНОЙ услуги из заказа:
@@ -86,4 +90,16 @@ UPDATE order_service SET employee_id = 1 WHERE order_id = 1 AND service_id = 1;
 Назначение сотруднику ВСЕХ услуг из заказа:
 ```postgresql
 UPDATE order_service SET employee_id = 1 WHERE order_id = 1;
+```
+
+Список незавершенных и неотмененных услуг, назначенных сотруднику по его ID:
+```postgresql
+SELECT * FROM order_service WHERE status != 'done' AND status != 'cancelled' AND employee_id = 1;
+```
+
+### Уведомления
+
+Список уведомлений пользователя по его ID:
+```postgresql
+SELECT * FROM notification WHERE employee_id = 1;
 ```

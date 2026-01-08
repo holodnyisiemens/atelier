@@ -36,8 +36,17 @@ FOR EACH ROW
 EXECUTE FUNCTION set_updated_at();
 
 -- Триггер проверки активности сотрудника перед назначением ему выполнения услуги
+DROP TRIGGER IF EXISTS trg_check_employee_active ON order_service;
 CREATE TRIGGER trg_check_employee_active
 BEFORE INSERT OR UPDATE OF employee_id
 ON order_service
 FOR EACH ROW
 EXECUTE FUNCTION check_employee_active();
+
+-- Триггер отправки уведомлений сотрудникам при обновленнии данных заказов
+DROP TRIGGER IF EXISTS trg_notify_employee_assigned ON order_service;
+CREATE TRIGGER trg_notify_employee_assigned
+AFTER INSERT OR UPDATE
+ON order_service
+FOR EACH ROW
+EXECUTE FUNCTION notify_employee_assigned();
