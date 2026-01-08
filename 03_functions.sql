@@ -66,3 +66,27 @@ BEGIN
     RETURN total_amount;
 END;
 $$ LANGUAGE plpgsql;
+
+-- Проверка активности сотрудника перед назначением выполнения услуги
+CREATE OR REPLACE FUNCTION check_employee_active()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Если сотрудник не назначается — пропускаем
+    IF NEW.employee_id IS NULL THEN
+        RETURN NEW;
+    END IF;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM employee e
+        WHERE e.id = NEW.employee_id
+          AND e.is_active = true
+    ) THEN
+        RAISE EXCEPTION
+            'Employee % is inactive and cannot be assigned to services',
+            NEW.employee_id;
+    END IF;
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;

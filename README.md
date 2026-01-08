@@ -67,3 +67,23 @@ SELECT * FROM order_list_view WHERE "Status" != 'done' AND "Status" != 'cancelle
 ```postgresql
 SELECT * FROM order_list_view WHERE "Order ID" = 1;
 ```
+
+Список активных сотрудников:
+```postgresql
+SELECT * from employee WHERE is_active = true;
+```
+
+Список услуг:
+```postgresql
+SELECT * from service;
+```
+
+Назначение сотруднику ТОЛЬКО ОДНОЙ услуги из заказа:
+```postgresql
+UPDATE order_service SET employee_id = 1 WHERE order_id = 1 AND service_id = 1;
+```
+
+Назначение сотруднику ВСЕХ услуг из заказа:
+```postgresql
+UPDATE order_service SET employee_id = 1 WHERE order_id = 1;
+```

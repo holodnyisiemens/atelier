@@ -34,3 +34,10 @@ CREATE TRIGGER trg_set_updated_at_notification
 BEFORE UPDATE ON notification
 FOR EACH ROW
 EXECUTE FUNCTION set_updated_at();
+
+-- Триггер проверки активности сотрудника перед назначением ему выполнения услуги
+CREATE TRIGGER trg_check_employee_active
+BEFORE INSERT OR UPDATE OF employee_id
+ON order_service
+FOR EACH ROW
+EXECUTE FUNCTION check_employee_active();
