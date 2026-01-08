@@ -43,12 +43,7 @@ ALTER DATABASE atelier SET TIMEZONE TO 'Asia/Yekaterinburg';
 
 ## Использование
 
-### Услуги и заказы
-
-Список доступных услуг:
-```postgresql
-SELECT * from service;
-```
+### Вывод услуг и заказов
 
 Список всех заказов:
 ```postgresql
@@ -74,6 +69,32 @@ SELECT * FROM order_list_view WHERE "Status" != 'done' AND "Status" != 'cancelle
 ```postgresql
 SELECT * FROM order_list_view WHERE "Order ID" = 1;
 ```
+
+Также можно выводить эти данные, не используя представления (view).
+
+### Создание заказа
+
+Список доступных услуг:
+```postgresql
+SELECT * from service;
+```
+
+Список заказчиков
+```postgresql
+SELECT * FROM customer;
+```
+
+Создание заказа (указываем ID заказчика и дедлайн):
+```postgresql
+INSERT INTO orders (customer_id, deadline) VALUES (1, '2026-01-16');
+```
+
+Добавление услуги в заказ (указываем ID заказа и ID услуги):
+```
+INSERT INTO order_service (order_id, service_id) VALUES (1, 1);
+```
+
+Также есть дополнительные поля при создании и наполнении заказа, такие как количество услуг, мерки, описание и др.
 
 ### Сотрудники и назначение услуг
 
