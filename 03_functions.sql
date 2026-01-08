@@ -50,3 +50,19 @@ BEGIN
     RETURN result;
 END;
 $$ LANGUAGE plpgsql;
+
+-- Функция расчета суммы заказа
+CREATE OR REPLACE FUNCTION get_order_total_amount(id_order INT)
+RETURNS NUMERIC(10,2) AS $$
+DECLARE
+    total_amount NUMERIC(10,2);
+BEGIN
+    SELECT COALESCE(SUM(s.price * os.count), 0)
+    INTO total_amount
+    FROM order_service os
+    JOIN service s ON s.id = os.service_id
+    WHERE os.order_id = id_order;
+
+    RETURN total_amount;
+END;
+$$ LANGUAGE plpgsql;
