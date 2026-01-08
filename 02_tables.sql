@@ -34,8 +34,6 @@ CREATE TABLE customer (
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     customer_id INT NOT NULL,
-    total_amount NUMERIC(10,2) NOT NULL DEFAULT 0,
-    order_status order_status NOT NULL DEFAULT 'new',
     deadline DATE NOT NULL CHECK (deadline >= CURRENT_DATE),
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
@@ -54,7 +52,7 @@ CREATE TABLE order_service (
     description VARCHAR(500),
     measurements VARCHAR(200),
     count INT NOT NULL DEFAULT 1,
-    service_status service_status NOT NULL DEFAULT 'new',
+    status work_status NOT NULL DEFAULT 'new',
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
 
